@@ -3,6 +3,7 @@ new Vue({
    el:"#app",
    data:{
     total:0,
+    search:"",
     products:[       
         {title:"Product 1",id:1, price:9.99},
         {title:"Product 2",id:2,price:9.99},
@@ -56,6 +57,12 @@ addToCart: function(product) {
      this.total+=product.price;
 
 
+ },
+
+ OnSubmit:function()
+ {
+
+   console.log("Posted");
  },
 
  inc:function(item){
