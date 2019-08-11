@@ -3,18 +3,17 @@ new Vue({
    el:"#app",
    data:{
     total:0,
-    search:"",
-    products:[       
-        {title:"Product 1",id:1, price:9.99},
-        {title:"Product 2",id:2,price:9.99},
-        {title:"Product 3",id:3,price:9.99}
-    ],
+    search:"cat",
+    products:[],                
+cart:[],
+lastSearch:"",
+loading:false
+},
 
-cart:[
-
-
-]
-   },
+created:function()
+{
+this.OnSubmit();
+},
 
    filters:{
 
@@ -61,8 +60,21 @@ addToCart: function(product) {
 
  OnSubmit:function()
  {
+this.loading=true;
+this.products=[];
+var path="/search?q=".concat(this.search);
+this.$http.get(path).then(function(response){
+setTimeout(function()
+{
 
-   console.log("Posted");
+   this.products=response.body;
+   this.lastSearch=this.search;
+   this.loading=false;
+
+}.bind(this),300);
+
+});
+
  },
 
  inc:function(item){
