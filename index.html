@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="/public/style.css">
 </head>
 <body>
-<div id="app">
+<div id="app" v-cloak>
     <div class="header">
         <div class="container">
             <div class="title">     
@@ -26,10 +26,10 @@
         </div>
     </div>
     <div class="main container">
-        <div class="products">
+        <div id="products" class="products">
             <div v-if="loading">Loading....</div>
-            <div class="search-results" v-else>
-                    Found {{ products.length }} results for search term <em>{{ lastSearch }}</em>.
+            <div id="results" class="search-results" v-else>
+                    Found {{ results.length }} results for search term <em>{{ lastSearch }}</em>.
             <div v-for="product in products" class="product" v-bind:key="product.id">
                 <div class="product-image">
               <img v-bind:src="product.thumb">
@@ -38,7 +38,14 @@
                 <p class="product-price"><strong>{{ product.price | currency }}</strong></p>
                 <button v-on:click="addToCart(product)" class="add-to-cart btn">Add to cart</button>
                 </div>             
-           </div>           
+           </div> 
+           <div id="products1">
+
+                <div v-if="products.length === results.length && results.length > 0">
+                        No more items.
+                      </div>
+                    </div>        
+                 
         </div>
         </div>
         
@@ -69,13 +76,14 @@
         </div>
     
     </div>
+    </div>
 
 
 <!-- Scripts -->
 <script src="/reload/reload.js"></script>
 <script type="text/javascript" src="node_modules/vue/dist/vue.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+<script type="text/javascript" src="node_modules/scrollmonitor/scrollMonitor.js"></script> 
 <script type="text/javascript" src="public/script.js"></script>
-
 </body>
 </html>

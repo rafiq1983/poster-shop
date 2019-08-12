@@ -1,5 +1,11 @@
 /* Generic styling */
 
+[v-cloak]
+{
+
+    display:none !important;
+}
+
 button:focus, input:focus {
     outline: none;
 }

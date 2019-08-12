@@ -1,13 +1,40 @@
 
+var LOAD_NUM = 4;
+var watcher;
 new Vue({
    el:"#app",
    data:{
     total:0,
     search:"cat",
-    products:[],                
+    products:[],
+    results:[],                
 cart:[],
 lastSearch:"",
 loading:false
+},
+
+updated:function(){
+//setTimeout(function()
+//{
+
+var t = document.querySelector("#products1");
+ watcher = scrollMonitor.create(t);
+console.log(watcher);
+watcher.enterViewport(this. appendResults);
+//},1000)
+
+},
+
+beforeUpdate:function()
+{
+
+if(watcher)
+{
+watcher.destroy();
+watcher=null;
+
+}
+
 },
 
 created:function()
@@ -29,6 +56,18 @@ return "$".concat(price.toFixed(2));
 
 
    methods:{
+
+      appendResults:function()
+      {
+         if (this.products.length < this.results.length)
+         {
+              var append= this.results.slice(this.products.length,this.products.length + LOAD_NUM);
+              this.products=this.products.concat(append);
+
+         }
+
+
+      },
 
 addToCart: function(product) {
     var added=false;
@@ -67,7 +106,8 @@ this.$http.get(path).then(function(response){
 setTimeout(function()
 {
 
-   this.products=response.body;
+   this.results=response.body;
+   this.appendResults();
    this.lastSearch=this.search;
    this.loading=false;
 
@@ -99,12 +139,10 @@ if (item.qty <=0)
 }
 
  }
-     
-       
-    
-  
-   
-
 
 }
+
 });
+
+
+
